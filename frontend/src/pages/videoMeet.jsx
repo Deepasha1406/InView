@@ -10,11 +10,11 @@ import MicOffIcon from '@mui/icons-material/MicOff'
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
 import ChatIcon from '@mui/icons-material/Chat'
-// import server from '../environment';
+import server from '../environment';
 import io from "socket.io-client";
 
 
-const server_url = "http://localhost:8000"
+const server_url = server;
 
 var connections = {};
 
@@ -70,19 +70,15 @@ export default function VideoMeetComponent() {
             const videoPermission = await navigator.mediaDevices.getUserMedia({ video: true });
             if (videoPermission) {
                 setVideoAvailable(true);
-                // console.log('Video permission granted');
             } else {
                 setVideoAvailable(false);
-                // console.log('Video permission denied');
             }
 
             const audioPermission = await navigator.mediaDevices.getUserMedia({ audio: true });
             if (audioPermission) {
                 setAudioAvailable(true);
-                // console.log('Audio permission granted');
             } else {
                 setAudioAvailable(false);
-                // console.log('Audio permission denied');
             }
 
             if (navigator.mediaDevices.getDisplayMedia) {
@@ -106,7 +102,6 @@ export default function VideoMeetComponent() {
         }
     }
 
-    
     useEffect(() => {
         console.log("HELLO")
         getPermissions();
@@ -181,7 +176,7 @@ export default function VideoMeetComponent() {
     let getUserMedia = () => {
         if ((video && videoAvailable) || (audio && audioAvailable)) {
             navigator.mediaDevices.getUserMedia({ video: video, audio: audio })
-                .then((getUserMediaSuccess) =>{})
+                .then(getUserMediaSuccess)
                 .then((stream) => { })
                 .catch((e) => console.log(e))
         } else {
